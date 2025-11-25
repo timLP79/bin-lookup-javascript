@@ -1,0 +1,175 @@
+:root {
+    --bsu-blue: #0033A0;
+    --bsu-orange: #D64309;
+    --bsu-light-gray: #f4f4f4;
+    --bsu-dark-gray: #333;
+}
+
+body {
+    background-color: var(--bsu-light-gray);
+    padding: 15px;
+}
+
+.main-container {
+    background: white;
+    border-radius: 8px;
+    border: 2px solid var(--bsu-blue);
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: var(--bsu-blue);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.header p {
+    margin-bottom: 0;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+}
+
+/* Custom tab styling with BSU colors */
+.nav-tabs .nav-link {
+    color: #666;
+    border: none;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: var(--bsu-blue);
+    color: white;
+    border-radius: 4px 4px 0 0;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--bsu-blue);
+    font-weight: 600;
+    border-bottom-color: var(--bsu-blue);
+    background-color: transparent;
+}
+
+/* Custom button colors */
+.btn-primary {
+    background-color: var(--bsu-blue);
+    border-color: var(--bsu-blue);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--bsu-orange);
+    border-color: var(--bsu-orange);
+}
+
+/* Table styling */
+.table-container {
+    max-height: 600px;
+    overflow: auto;
+}
+
+table.dataframe th {
+    background: var(--bsu-blue);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+table.dataframe th:hover {
+    background: var(--bsu-orange);
+}
+
+table.dataframe td {
+    white-space: nowrap;
+}
+
+/* Alert customization */
+.alert-success {
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    border-left: 4px solid #dc3545;
+}
+
+.alert-info {
+    border-left: 4px solid var(--bsu-blue);
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: var(--bsu-blue);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--bsu-blue);
+    border-color: var(--bsu-blue);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--bsu-orange);
+    border-color: var(--bsu-orange);
+    color: white;
+}
+
+/* Form spacing */
+.search-form {
+    background-color: white;
+    padding: 1.5rem;
+    border: 1px solid var(--bsu-blue);
+    border-radius: 8px;
+}
+
+.hint {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    body {
+        padding: 5px;
+    }
+
+    .header {
+        padding: 20px 15px;
+    }
+
+    .search-form {
+        padding: 1rem;
+    }
+
+    .table-container {
+        max-height: 400px;
+    }
+
+    /* Stack form controls vertically on mobile */
+    .form-row-mobile {
+        flex-direction: column;
+    }
+
+    .form-row-mobile > div {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pagination {
+        font-size: 0.85rem;
+    }
+
+    .pagination .page-link {
+        padding: 0.4rem 0.6rem;
+    }
+}
