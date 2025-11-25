@@ -15,9 +15,10 @@ A simple, client-side web application for searching Bank Identification Numbers 
 
 ### Running the Tool
 
-1. Simply open `index.html` in any modern web browser
-2. Wait for the data to load (you'll see "System Ready" when complete)
-3. Choose your search method using the tabs
+1. Ensure all files (`index.html`, `styles.css`, `script.js`) are in the same directory
+2. Open `index.html` in any modern web browser
+3. Wait for the data to load (you'll see "System Ready" when complete)
+4. Choose your search method using the tabs
 
 ### BIN Search
 
@@ -69,9 +70,11 @@ Recommended browsers:
 ### File Structure
 
 ```
-bin-lookup-javascript/
-├── index.html          # Main application file (contains HTML, CSS, and JS)
-└── README.md          # This file
+bin-lookup/
+├── index.html          # Main HTML structure
+├── styles.css          # Custom CSS styling
+├── script.js           # JavaScript application logic
+└── README.md           # This file
 ```
 
 ## Features in Detail
@@ -102,7 +105,7 @@ bin-lookup-javascript/
 
 ### Changing Colors
 
-The tool uses CSS variables for theming. Edit these in the `:root` section:
+The tool uses CSS variables for theming. Edit these in `styles.css` at the `:root` section:
 
 ```css
 :root {
@@ -110,13 +113,12 @@ The tool uses CSS variables for theming. Edit these in the `:root` section:
     --bsu-orange: #D64309;      /* Accent color */
     --bsu-light-gray: #f4f4f4;  /* Background */
     --bsu-dark-gray: #333;      /* Text color */
-    --bsu-white: #fff;          /* White */
 }
 ```
 
 ### Changing Data Source
 
-To use a different CSV file, modify line 221:
+To use a different CSV file, modify the `loadData()` function in `script.js`:
 
 ```javascript
 const response = await fetch('YOUR_CSV_URL_HERE');
@@ -127,7 +129,6 @@ const response = await fetch('YOUR_CSV_URL_HERE');
 - Requires internet connection to load CSV data
 - CSV file must be accessible via CORS-enabled URL
 - Large datasets may take time to load initially
-- Simple CSV parser (doesn't handle escaped commas within quoted fields)
 
 ## License
 
