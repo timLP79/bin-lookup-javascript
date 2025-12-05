@@ -54,8 +54,13 @@
                                         </div>
                                         <div class="col-6 col-md-3">
                                             <label for="bin-limit" class="form-label fw-semibold">Limit</label>
-                                            <input type="number" class="form-control" id="bin-limit"
-                                                value="10" min="1">
+                                            <select class="form-select" id="bin-limit">
+                                                <option value="10" selected>10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="all">All</option>
+                                            </select>
                                             <div class="hint"></div>
                                         </div>
                                         <div class="col-6 col-md-3">
@@ -80,8 +85,13 @@
                                         </div>
                                         <div class="col-6 col-md-3">
                                             <label for="keyword-limit" class="form-label fw-semibold">Limit</label>
-                                            <input type="number" class="form-control" id="keyword-limit"
-                                                value="10" min="1">
+                                            <select class="form-select" id="keyword-limit">
+                                                <option value="10" selected>10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="all">All</option>
+                                            </select>
                                             <div class="hint"></div>
                                         </div>
                                         <div class="col-6 col-md-3">
@@ -102,8 +112,15 @@
 
                         <!-- Results -->
                         <div id="results" class="mt-4 d-none">
-                            <div class="mb-3">
-                                <h5 class="text-primary" id="results-title">Results</h5>
+                            <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <h5 class="text-primary mb-0" id="results-title">Results</h5>
+                                <button class="btn btn-success btn-sm" onclick="exportToCSV()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                    Export CSV
+                                </button>
                             </div>
                             <div id="table-output" class="table-container table-responsive"></div>
                             <nav id="pagination-container" class="mt-3 d-none">

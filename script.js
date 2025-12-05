@@ -81,7 +81,8 @@ function runBinSearch() {
     if (data.length === 0) return;
 
     const searchVal = document.getElementById('bin-input').value.trim();
-    const limit = parseInt(document.getElementById('bin-limit').value);
+    const limitValue = document.getElementById('bin-limit').value;
+    const limit = limitValue === 'all' ? Number.MAX_SAFE_INTEGER : parseInt(limitValue);
 
     if (!searchVal) {
         document.getElementById('status-container').innerHTML =
@@ -108,7 +109,8 @@ function runKeywordSearch() {
     if (data.length === 0) return;
 
     const keywordsRaw = document.getElementById('keyword-input').value.trim();
-    const limit = parseInt(document.getElementById('keyword-limit').value);
+    const limitValue = document.getElementById('keyword-limit').value;
+    const limit = limitValue === 'all' ? Number.MAX_SAFE_INTEGER : parseInt(limitValue);
 
     if (!keywordsRaw) {
         document.getElementById('status-container').innerHTML =
@@ -135,13 +137,18 @@ function runKeywordSearch() {
 // Display results as HTML table with pagination
 function displayResults(results, limit, title) {
     document.getElementById('results-title').innerHTML = title;
-    currentResults = results;
-    itemsPerPage = limit;
+
+    // Limit the total results if not showing all
+    const limitedResults = limit === Number.MAX_SAFE_INTEGER ? results : results.slice(0, limit);
+    const totalMatches = results.length;
+
+    currentResults = limitedResults;
+    itemsPerPage = 25; // Fixed page size for pagination
     currentPage = 1;
     currentSortColumn = null;
     currentSortDirection = 'asc';
 
-    if (results.length === 0) {
+    if (limitedResults.length === 0) {
         document.getElementById('status-container').innerHTML =
             '<div class="alert alert-warning mb-0">No matching records found.</div>';
         document.getElementById('results').classList.add('d-none');
@@ -149,8 +156,14 @@ function displayResults(results, limit, title) {
     } else {
         renderPage();
         renderPagination();
+
+        // Show appropriate status message
+        let statusMsg = `Found ${totalMatches.toLocaleString()} matches`;
+        if (limitedResults.length < totalMatches) {
+            statusMsg += ` (showing first ${limitedResults.length.toLocaleString()})`;
+        }
         document.getElementById('status-container').innerHTML =
-            `<div class="alert alert-success mb-0">Found ${results.length.toLocaleString()} matches</div>`;
+            `<div class="alert alert-success mb-0">${statusMsg}</div>`;
         document.getElementById('results').classList.remove('d-none');
     }
 }
@@ -292,6 +305,50 @@ function goToPage(page) {
 
     // Scroll to top of results
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Export current results to CSV
+function exportToCSV() {
+    if (currentResults.length === 0) return;
+
+    // Function to escape CSV fields
+    function escapeCSVField(field) {
+        if (field == null) return '';
+        const str = field.toString();
+        // If field contains comma, quote, or newline, wrap in quotes and escape quotes
+        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+            return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+    }
+
+    // Build CSV content
+    let csvContent = '';
+
+    // Add headers
+    csvContent += headers.map(escapeCSVField).join(',') + '\n';
+
+    // Add data rows
+    currentResults.forEach(row => {
+        const rowData = headers.map(header => escapeCSVField(row[header]));
+        csvContent += rowData.join(',') + '\n';
+    });
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    // Generate filename with timestamp
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const filename = `bin-lookup-export-${timestamp}.csv`;
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 // Add Enter key support
